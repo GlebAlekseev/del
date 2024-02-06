@@ -4,5 +4,10 @@
     <string name="hint_note_description">Описание</string>
     <string name="button_note_add">Добавить</string>
     <string name="button_note_save">Сохранить</string>
+    <string name="button_note_edit">Редактировать</string>
     <string name="button_note_show_last">Показать последнюю заметку</string>
+
+    <string name="text_example_note_title">Заметка №%s</string>
+    <string name="text_example_note_description">Описание заметки</string>
 </resources>
+

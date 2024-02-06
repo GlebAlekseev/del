@@ -1,4 +1,6 @@
-package com.glebalekseev.lab
+package com.glebalekseev.lab.data
+
+import com.glebalekseev.lab.entity.Note
 
 class NoteRepository {
     private val notes = mutableListOf<Note>()

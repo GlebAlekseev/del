@@ -1,35 +1,37 @@
-package com.glebalekseev.lab
+package com.glebalekseev.lab.controller
 
-import android.app.Application
 import androidx.core.math.MathUtils
+import com.glebalekseev.lab.App
+import com.glebalekseev.lab.entity.Note
+import com.glebalekseev.lab.listener.NoteListener
 import com.glebalekseev.lab.view.NoteView
 
-class NoteController(private val noteView: NoteView, var currentIndex: Int = 0) : NoteListener {
+class NoteController(
+    private val noteView: NoteView,
+    private val startActivityForResult: (Note?, Boolean) -> Unit,
+    var currentIndex: Int = 0
+) : NoteListener {
     private val repository = (noteView.context.applicationContext as App).noteRepository
 
     init {
         loadNoteView()
     }
 
-    override fun onAdd() {
-        repository.addNote(title = noteView.title, description = noteView.description)
+    fun saveNote(note: Note){
+        repository.saveNote(note)
         loadNoteView()
     }
 
-    override fun onSave() {
-        val id = repository.getNote(currentIndex)?.id
-        if (id == null) repository.addNote(
-            title = noteView.title,
-            description = noteView.description
-        )
-        else repository.saveNote(
-            Note(
-                id = id,
-                title = noteView.title,
-                description = noteView.description
-            )
-        )
-        loadNoteView()
+    override fun onAdd() {
+        startActivityForResult.invoke(null,true)
+    }
+
+    override fun onEdit() {
+        val note = repository.getNote(currentIndex)
+        if (note == null) onAdd()
+        else {
+            startActivityForResult.invoke(note, false)
+        }
     }
 
     override fun onShowLast() {

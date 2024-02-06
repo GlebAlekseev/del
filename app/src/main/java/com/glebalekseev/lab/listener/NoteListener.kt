@@ -1,8 +1,8 @@
-package com.glebalekseev.lab
+package com.glebalekseev.lab.listener
 
 interface NoteListener {
     fun onAdd()
-    fun onSave()
+    fun onEdit()
     fun onShowLast()
     fun onShowNext()
     fun onShowPrev()
