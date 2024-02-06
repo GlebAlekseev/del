@@ -26,8 +26,8 @@ class MainActivity : AppCompatActivity() {
         Log.i(TAG, "onCreate")
     }
 
-    override fun onSaveInstanceState(outState: Bundle, outPersistentState: PersistableBundle) {
-        super.onSaveInstanceState(outState, outPersistentState)
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
         val currentNoteIndex = noteController?.currentIndex
         currentNoteIndex?.let {
             outState.putInt(KEY_CURRENT_NOTE_INDEX, it)
