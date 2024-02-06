@@ -1,11 +1,11 @@
 package com.glebalekseev.lab
 
+import android.app.Application
 import androidx.core.math.MathUtils
 import com.glebalekseev.lab.view.NoteView
 
-class NoteController(val noteView: NoteView) : NoteListener {
-    private val repository = NoteRepository()
-    private var currentIndex = 0
+class NoteController(private val noteView: NoteView, var currentIndex: Int = 0) : NoteListener {
+    private val repository = (noteView.context.applicationContext as App).noteRepository
 
     init {
         loadNoteView()
