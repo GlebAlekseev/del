@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="NoteView">
+        <attr name="titleEditTextId" format="reference" required="true"/>
+        <attr name="descriptionEditTextId" format="reference" required="true"/>
+        <attr name="addViewId" format="reference" required="true"/>
+        <attr name="saveViewId" format="reference" required="true"/>
+        <attr name="showNextViewId" format="reference" required="true"/>
+        <attr name="showPrevViewId" format="reference" required="true"/>
+        <attr name="showLastViewId" format="reference" required="true"/>
+    </declare-styleable>
+</resources>

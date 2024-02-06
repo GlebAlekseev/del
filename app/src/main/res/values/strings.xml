@@ -1,5 +1,8 @@
 <resources>
     <string name="app_name">Lab Application</string>
-    <string name="message">Hello</string>
-    <string name="message2">Hello 2</string>
+    <string name="hint_note_title">Название</string>
+    <string name="hint_note_description">Описание</string>
+    <string name="button_note_add">Добавить</string>
+    <string name="button_note_save">Сохранить</string>
+    <string name="button_note_show_last">Показать последнюю заметку</string>
 </resources>

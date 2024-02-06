@@ -1,15 +1,15 @@
 package com.glebalekseev.lab
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
+import com.glebalekseev.lab.view.NoteView
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        findViewById<TextView>(R.id.mainTV).apply {
-            setText(resources.getText(R.string.message2))
-        }
+        val noteView = findViewById<NoteView>(R.id.noteView)
+        val noteController = NoteController(noteView)
+        noteView.setNoteListener(noteController)
     }
 }
