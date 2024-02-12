@@ -10,6 +10,7 @@
     android:orientation="vertical"
     app:descriptionEditTextId="@id/noteDescriptionET"
     app:saveViewId="@id/saveNoteBtn"
+    app:isDoneCBId="@id/isDoneCB"
     app:titleEditTextId="@id/noteTitleET">
 
     <EditText
@@ -33,6 +34,16 @@
         android:inputType="text"
         android:maxLength="1000"
         tools:text="Описание задачи 1" />
+
+    <CheckBox
+        android:id="@+id/isDoneCB"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/completed"
+        android:gravity="center"
+        android:layout_gravity="start"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/saveNoteBtn"

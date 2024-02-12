@@ -3,6 +3,7 @@ package com.glebalekseev.lab.view
 import android.content.Context
 import android.util.AttributeSet
 import android.view.View
+import android.widget.CheckBox
 import android.widget.EditText
 import android.widget.LinearLayout
 import com.glebalekseev.lab.R
@@ -12,10 +13,12 @@ class NoteEditView(context: Context, attrs: AttributeSet) : LinearLayout(context
     private var titleEditTextId: Int = -1
     private var descriptionEditTextId: Int = -1
     private var saveViewId: Int = -1
+    private var isDoneCBId: Int = -1
 
     private val titleEditText: EditText by lazy { findViewById(titleEditTextId) }
     private val descriptionEditText: EditText by lazy { findViewById(descriptionEditTextId) }
     private val saveView: View by lazy { findViewById(saveViewId) }
+    private val isDoneCB: CheckBox by lazy { findViewById(isDoneCBId) }
 
     init {
         val typedArray = context.obtainStyledAttributes(attrs, R.styleable.NoteEditView)
@@ -24,12 +27,13 @@ class NoteEditView(context: Context, attrs: AttributeSet) : LinearLayout(context
         val descriptionEditTextId =
             typedArray.getResourceId(R.styleable.NoteEditView_descriptionEditTextId, View.NO_ID)
         val saveViewId = typedArray.getResourceId(R.styleable.NoteEditView_saveViewId, View.NO_ID)
+        val isDoneCBId = typedArray.getResourceId(R.styleable.NoteEditView_isDoneCBId, View.NO_ID)
 
         typedArray.recycle()
 
         if (
             titleEditTextId == View.NO_ID || descriptionEditTextId == View.NO_ID
-            || saveViewId == View.NO_ID
+            || saveViewId == View.NO_ID || isDoneCBId == View.NO_ID
         ) {
             throw IllegalArgumentException("All required attributes must be set in NoteEditView")
         }
@@ -37,6 +41,7 @@ class NoteEditView(context: Context, attrs: AttributeSet) : LinearLayout(context
         this.titleEditTextId = titleEditTextId
         this.descriptionEditTextId = descriptionEditTextId
         this.saveViewId = saveViewId
+        this.isDoneCBId = isDoneCBId
     }
 
     fun setNoteEditListener(noteDetailListener: NoteDetailListener) {
@@ -53,5 +58,11 @@ class NoteEditView(context: Context, attrs: AttributeSet) : LinearLayout(context
         get() = descriptionEditText.text.toString()
         set(value) {
             descriptionEditText.setText(value)
+        }
+
+    var isDone: Boolean
+        get() = isDoneCB.isChecked
+        set(value) {
+            isDoneCB.isChecked = value
         }
 }

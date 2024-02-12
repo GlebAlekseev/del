@@ -14,16 +14,11 @@ class DetailActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detail)
-        val isAdd = intent.getBooleanExtra(KEY_IS_ADD, true)
         val note = intent.getParcelableExtra<Note>(KEY_NOTE)
-        val noteId = note?.id
-            ?: (if (isAdd) null else throw RuntimeException("the note has not been transferred to edit mode "))
-
         val noteEditView = findViewById<NoteEditView>(R.id.noteEditView)
         NoteDetailActivityController(
             noteEditView = noteEditView,
-            isAdd = isAdd,
-            noteId = noteId,
+            note = note,
             setResultAndFinish = { intent ->
                 setResult(Activity.RESULT_OK, intent)
                 finish()
@@ -38,15 +33,13 @@ class DetailActivity : AppCompatActivity() {
 
     companion object {
         const val KEY_NOTE = "note"
-        private const val KEY_IS_ADD = "is_add"
-        fun getIntent(context: Context, isAdd: Boolean, note: Note?): Intent {
+        fun getIntent(context: Context, note: Note?): Intent {
             return Intent(context, DetailActivity::class.java).apply {
                 note?.let {
                     val bundle = Bundle().apply {
                         putParcelable(KEY_NOTE, note)
                     }
                     this.putExtras(bundle)
-                    this.putExtra(KEY_IS_ADD, isAdd)
                 }
             }
         }

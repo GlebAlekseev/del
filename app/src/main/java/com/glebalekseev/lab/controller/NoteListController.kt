@@ -1,29 +1,30 @@
 package com.glebalekseev.lab.controller
 
-import android.widget.ArrayAdapter
-import android.widget.ListView
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.glebalekseev.lab.App
 import com.glebalekseev.lab.fragment.NoteListFragment
+import com.glebalekseev.lab.rv.NoteAdapter
 
 class NoteListController(
-    private val noteListView: ListView,
-    private val noteAdapter: ArrayAdapter<String>,
+    private val noteRV: RecyclerView,
+    private val noteAdapter: NoteAdapter,
     private val listener: NoteListFragment.NoteListListener
 ) {
-    private val repository = (noteListView.context.applicationContext as App).noteRepository
+    private val repository = (noteRV.context.applicationContext as App).noteRepository
 
-    fun initListView() {
-        noteListView.adapter = noteAdapter
-        noteListView.setOnItemClickListener { parent, view, position, id ->
-            val selectedNote = repository.notes.value.getOrNull(position)
-            selectedNote?.let {
-                listener.onNoteClick(it)
-            }
+    fun initRV() {
+        noteAdapter.onItemClick = { note ->
+            listener.onNoteClick(note)
         }
+        noteAdapter.onItemChangeDone = { note ->
+            repository.saveNote(note)
+        }
+        noteRV.adapter = noteAdapter
+        noteRV.layoutManager = LinearLayoutManager(noteRV.context)
+
         repository.notes.addObserver { notes ->
-            val noteTitles = notes.map { it.title }
-            noteAdapter.clear()
-            noteAdapter.addAll(noteTitles)
+            noteAdapter.list = notes
             noteAdapter.notifyDataSetChanged()
         }
     }

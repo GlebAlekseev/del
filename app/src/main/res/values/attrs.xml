@@ -13,5 +13,6 @@
         <attr name="titleEditTextId" format="reference" required="true" />
         <attr name="descriptionEditTextId" format="reference" required="true" />
         <attr name="saveViewId" format="reference" required="true" />
+        <attr name="isDoneCBId" format="reference" required="true" />
     </declare-styleable>
 </resources>

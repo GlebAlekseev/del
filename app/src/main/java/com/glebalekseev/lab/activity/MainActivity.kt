@@ -3,18 +3,16 @@ package com.glebalekseev.lab.activity
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.widget.FrameLayout
 import androidx.appcompat.app.AppCompatActivity
 import com.glebalekseev.lab.R
 import com.glebalekseev.lab.controller.NoteController
 import com.glebalekseev.lab.entity.Note
-import com.glebalekseev.lab.fragment.NoteDetailFragment
 import com.glebalekseev.lab.fragment.NoteListFragment
 
 class MainActivity : AppCompatActivity(), NoteListFragment.NoteListListener {
     companion object {
         private const val TAG = "MainActivity >> "
-        private const val REQUEST_CODE_EDIT = 1
+        const val REQUEST_CODE_EDIT = 1
     }
 
     private var noteController: NoteController? = null
@@ -22,25 +20,12 @@ class MainActivity : AppCompatActivity(), NoteListFragment.NoteListListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         noteController = NoteController(this)
+        noteController?.setupFab()
         Log.i(TAG, "onCreate")
     }
 
     override fun onNoteClick(note: Note) {
-        val noteDetailFrameLayout = findViewById<FrameLayout>(R.id.noteDetailFl)
-        if (noteDetailFrameLayout == null) {
-            startActivityForResult(
-                DetailActivity.getIntent(
-                    context = this,
-                    note = note,
-                    isAdd = false
-                ), REQUEST_CODE_EDIT
-            )
-        } else {
-            val noteDetailFragment = NoteDetailFragment.getInstance(note)
-            supportFragmentManager.beginTransaction()
-                .replace(R.id.noteDetailFl, noteDetailFragment)
-                .commit()
-        }
+        noteController?.onNoteClick(note)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

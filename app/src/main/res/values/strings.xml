@@ -9,5 +9,6 @@
 
     <string name="text_example_note_title">Заметка №%s</string>
     <string name="text_example_note_description">Описание заметки</string>
+    <string name="completed">Выполнено</string>
 </resources>
 

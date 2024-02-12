@@ -26,7 +26,7 @@ class NoteDetailFragment : Fragment() {
             ?: throw RuntimeException("Note arg is null")
         NoteDetailFragmentController(
             noteEditView = noteEditView,
-            noteId = note.id
+            note = note
         ).also {
             noteEditView.setNoteEditListener(it)
             if (savedInstanceState == null) {

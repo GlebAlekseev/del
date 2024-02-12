@@ -11,21 +11,22 @@ import com.glebalekseev.lab.view.NoteEditView
 
 class NoteDetailActivityController(
     private val noteEditView: NoteEditView,
-    private val isAdd: Boolean,
-    private val noteId: String?,
+    private val note: Note?,
     private val setResultAndFinish: (Intent) -> Unit
 ) : NoteDetailListener {
     private val repository = (noteEditView.context.applicationContext as App).noteRepository
 
     override fun onSave() {
         val bundle = Bundle().apply {
-            val note = if (noteId == null) Note(
+            val note = if (note?.id == null) Note(
                 title = noteEditView.title,
-                description = noteEditView.description
+                description = noteEditView.description,
+                isDone = noteEditView.isDone
             ) else Note(
-                id = noteId,
+                id = note.id,
                 title = noteEditView.title,
-                description = noteEditView.description
+                description = noteEditView.description,
+                isDone = noteEditView.isDone
             )
             this.putParcelable(
                 DetailActivity.KEY_NOTE,
@@ -46,9 +47,11 @@ class NoteDetailActivityController(
             )
             noteEditView.description =
                 noteEditView.resources.getString(R.string.text_example_note_description)
+            noteEditView.isDone = false
         } else {
             noteEditView.title = note.title
             noteEditView.description = note.description
+            noteEditView.isDone = note.isDone
         }
     }
 }
