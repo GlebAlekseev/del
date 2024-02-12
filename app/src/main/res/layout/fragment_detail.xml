@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.glebalekseev.lab.view.NoteEditView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/noteEditView"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="15dp"
+    android:gravity="center"
+    android:orientation="vertical"
+    app:descriptionEditTextId="@id/noteDescriptionET"
+    app:saveViewId="@id/saveNoteBtn"
+    app:titleEditTextId="@id/noteTitleET">
+
+    <EditText
+        android:id="@+id/noteTitleET"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:hint="@string/hint_note_title"
+        android:importantForAutofill="no"
+        android:inputType="text"
+        android:maxLength="1000"
+        tools:text="Задача 1" />
+
+    <EditText
+        android:id="@+id/noteDescriptionET"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:hint="@string/hint_note_description"
+        android:importantForAutofill="no"
+        android:inputType="text"
+        android:maxLength="1000"
+        tools:text="Описание задачи 1" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/saveNoteBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:background="@drawable/default_btn_background"
+        android:gravity="center"
+        android:minHeight="40dp"
+        android:text="@string/button_note_save"
+        android:textAllCaps="true"
+        android:textColor="@android:color/white" />
+</com.glebalekseev.lab.view.NoteEditView>

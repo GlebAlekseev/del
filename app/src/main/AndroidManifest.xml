@@ -14,7 +14,7 @@
         android:theme="@style/Theme.LabApplication"
         tools:targetApi="31">
         <activity
-            android:name=".activity.EditActivity"
+            android:name=".activity.DetailActivity"
             android:exported="false" />
         <activity
             android:name=".activity.MainActivity"

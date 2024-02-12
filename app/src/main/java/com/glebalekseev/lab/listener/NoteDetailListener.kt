@@ -1,5 +1,5 @@
 package com.glebalekseev.lab.listener
 
-interface NoteEditListener {
+interface NoteDetailListener {
     fun onSave()
 }

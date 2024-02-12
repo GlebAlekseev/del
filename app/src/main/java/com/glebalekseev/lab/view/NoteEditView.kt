@@ -6,7 +6,7 @@ import android.view.View
 import android.widget.EditText
 import android.widget.LinearLayout
 import com.glebalekseev.lab.R
-import com.glebalekseev.lab.listener.NoteEditListener
+import com.glebalekseev.lab.listener.NoteDetailListener
 
 class NoteEditView(context: Context, attrs: AttributeSet) : LinearLayout(context, attrs) {
     private var titleEditTextId: Int = -1
@@ -39,8 +39,8 @@ class NoteEditView(context: Context, attrs: AttributeSet) : LinearLayout(context
         this.saveViewId = saveViewId
     }
 
-    fun setNoteEditListener(noteEditListener: NoteEditListener) {
-        saveView.setOnClickListener { noteEditListener.onSave() }
+    fun setNoteEditListener(noteDetailListener: NoteDetailListener) {
+        saveView.setOnClickListener { noteDetailListener.onSave() }
     }
 
     var title: String

@@ -4,17 +4,17 @@ import android.content.Intent
 import android.os.Bundle
 import com.glebalekseev.lab.App
 import com.glebalekseev.lab.R
-import com.glebalekseev.lab.activity.EditActivity
+import com.glebalekseev.lab.activity.DetailActivity
 import com.glebalekseev.lab.entity.Note
-import com.glebalekseev.lab.listener.NoteEditListener
+import com.glebalekseev.lab.listener.NoteDetailListener
 import com.glebalekseev.lab.view.NoteEditView
 
-class NoteEditController(
+class NoteDetailActivityController(
     private val noteEditView: NoteEditView,
     private val isAdd: Boolean,
     private val noteId: String?,
     private val setResultAndFinish: (Intent) -> Unit
-) : NoteEditListener {
+) : NoteDetailListener {
     private val repository = (noteEditView.context.applicationContext as App).noteRepository
 
     override fun onSave() {
@@ -28,7 +28,7 @@ class NoteEditController(
                 description = noteEditView.description
             )
             this.putParcelable(
-                EditActivity.KEY_NOTE,
+                DetailActivity.KEY_NOTE,
                 note
             )
         }
