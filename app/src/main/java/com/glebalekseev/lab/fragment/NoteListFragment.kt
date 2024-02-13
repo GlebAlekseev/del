@@ -21,7 +21,7 @@ class NoteListFragment : Fragment() {
     private var noteListController: NoteListController? = null
 
     private val listener: NoteListListener by lazy {
-        (activity as? NoteListListener)
+        (parentFragment as? NoteListListener)
             ?: throw RuntimeException("To use NoteListFragment the activity must implement NoteListListListener")
     }
     private lateinit var noteRV: RecyclerView

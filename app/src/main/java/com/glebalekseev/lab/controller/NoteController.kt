@@ -1,47 +1,38 @@
 package com.glebalekseev.lab.controller
 
-import android.app.Activity
+import android.os.Bundle
 import android.widget.FrameLayout
-import com.glebalekseev.lab.App
+import androidx.navigation.fragment.findNavController
 import com.glebalekseev.lab.R
-import com.glebalekseev.lab.activity.DetailActivity
-import com.glebalekseev.lab.activity.MainActivity
 import com.glebalekseev.lab.entity.Note
+import com.glebalekseev.lab.fragment.MainFragment
 import com.glebalekseev.lab.fragment.NoteDetailFragment
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
-class NoteController(private val mainActivity: MainActivity) {
-    private val repository = (mainActivity.applicationContext as App).noteRepository
-
-    fun saveNote(note: Note) {
-        repository.saveNote(note)
-    }
-
-    fun setupFab() = with(mainActivity) {
+class NoteController(private val mainFragment: MainFragment) {
+    fun setupFab() = with(mainFragment.requireView()) {
         val addNoteFab = findViewById<FloatingActionButton>(R.id.addNoteFab)
         addNoteFab.setOnClickListener {
-            startDetailActivity(note = null, isAdd = true)
+            navigateToNoteDetailFragment()
         }
     }
 
-    fun onNoteClick(note: Note) = with(mainActivity) {
+    fun onNoteClick(note: Note) = with(mainFragment.requireView()) {
         val noteDetailFrameLayout = findViewById<FrameLayout>(R.id.noteDetailFl)
         if (noteDetailFrameLayout == null) {
-            startDetailActivity(note = note, isAdd = false)
+            navigateToNoteDetailFragment(note)
         } else {
-            val noteDetailFragment = NoteDetailFragment.getInstance(note)
-            supportFragmentManager.beginTransaction()
+            val noteDetailFragment = NoteDetailFragment.newInstance(note)
+            mainFragment.parentFragmentManager.beginTransaction()
                 .replace(R.id.noteDetailFl, noteDetailFragment)
                 .commit()
         }
     }
 
-    private fun Activity.startDetailActivity(note: Note?, isAdd: Boolean) {
-        startActivityForResult(
-            DetailActivity.getIntent(
-                context = this,
-                note = note,
-            ), MainActivity.REQUEST_CODE_EDIT
-        )
+    fun navigateToNoteDetailFragment(note: Note? = null) {
+        val navController = mainFragment.findNavController()
+        navController.navigate(R.id.action_mainFragment_to_noteDetailFragment, Bundle().apply {
+            note?.let { putParcelable(NoteDetailFragment.KEY_NOTE, it) }
+        })
     }
 }
