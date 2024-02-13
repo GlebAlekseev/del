@@ -2,13 +2,18 @@ package com.glebalekseev.lab.entity
 
 import android.os.Parcel
 import android.os.Parcelable
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import java.util.UUID
 
+@Entity
 data class Note(
-    val id: String = UUID.randomUUID().toString(),
-    val title: String,
-    val description: String,
-    val isDone: Boolean
+    @PrimaryKey
+    @ColumnInfo("id") val id: String = UUID.randomUUID().toString(),
+    @ColumnInfo("title") val title: String,
+    @ColumnInfo("description") val description: String,
+    @ColumnInfo("is_done") val isDone: Boolean
 ) : Parcelable {
     constructor(parcel: Parcel) : this(
         parcel.readString() ?: "",

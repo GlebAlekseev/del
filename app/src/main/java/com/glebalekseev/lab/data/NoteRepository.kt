@@ -1,34 +1,28 @@
 package com.glebalekseev.lab.data
 
+import com.glebalekseev.lab.App
 import com.glebalekseev.lab.core.MyObservable
+import com.glebalekseev.lab.data.room.NoteDao
 import com.glebalekseev.lab.entity.Note
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
-class NoteRepository {
-    val notes = MyObservable(
-        listOf<Note>(
-            Note(
-                title = "Запись 1",
-                description = "Описание для заметки 1",
-                isDone = false
-            ),
-            Note(
-                title = "Запись 2",
-                description = "Описание для заметки 2",
-                isDone = false
-            ),
-            Note(
-                title = "Запись 3",
-                description = "Описание для заметки 3",
-                isDone = true
-            ),
-            Note(
-                title = "Запись 4",
-                description = "Описание для заметки 4",
-                isDone = false
-            ),
-        )
-    )
+class NoteRepository(
+    private val noteDao: NoteDao
+) {
+    val notes: MyObservable<List<Note>> = MyObservable(listOf())
 
+    init {
+        CoroutineScope(Dispatchers.IO).launch {
+            noteDao.getAllNotes().collect {
+                withContext(Dispatchers.Main) {
+                    notes.setNewValue(it)
+                }
+            }
+        }
+    }
 
     @Synchronized
     fun getNoteCount() = notes.value.size
@@ -38,13 +32,11 @@ class NoteRepository {
 
     @Synchronized
     fun addNote(title: String, description: String, isDone: Boolean) {
-        notes.setNewValue(
-            notes.value + listOf(
-                Note(
-                    title = title,
-                    description = description,
-                    isDone = isDone
-                )
+        noteDao.addNote(
+            Note(
+                title = title,
+                description = description,
+                isDone = isDone
             )
         )
     }
@@ -56,10 +48,7 @@ class NoteRepository {
         if (oldNote == null) {
             addNote(title = note.title, description = note.description, isDone = note.isDone)
         } else {
-            val index = localNotes.indexOf(oldNote)
-            val result = localNotes.toMutableList()
-            result[index] = note
-            notes.setNewValue(result)
+            noteDao.updateNote(note)
         }
     }
 }
